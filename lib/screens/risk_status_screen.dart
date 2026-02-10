@@ -83,7 +83,7 @@ class _RiskStatusScreenState extends State<RiskStatusScreen> {
                     height: 200,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: _riskColor.withOpacity(0.1),
+                      color: _riskColor.withValues(alpha: 0.1),
                       border: Border.all(color: _riskColor, width: 4),
                     ),
                     child: Center(
