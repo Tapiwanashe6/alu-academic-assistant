@@ -189,7 +189,37 @@ class _RiskStatusScreenState extends State<RiskStatusScreen> {
                   const SizedBox(height: 32),
 
                   // Risk Thresholds Info
-                  
+                  Card(
+                    elevation: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Risk Thresholds',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            '• Safe Zone: ≥${ALUConstants.safeThreshold.toInt()}% attendance',
+                            style: const TextStyle(color: Color(0xFF003366)),
+                          ),
+                          Text(
+                            '• Warning Zone: ${ALUConstants.warningThreshold.toInt()}% - ${ALUConstants.safeThreshold.toInt()}% attendance',
+                            style: const TextStyle(color: Color(0xFFFFC107)),
+                          ),
+                          Text(
+                            '• At Risk: <${ALUConstants.warningThreshold.toInt()}% attendance',
+                            style: const TextStyle(color: Color(0xFFCC0000)),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
     );
   }
 }
