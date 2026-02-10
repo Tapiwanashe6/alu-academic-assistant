@@ -120,7 +120,73 @@ class _RiskStatusScreenState extends State<RiskStatusScreen> {
                   ),
                   const SizedBox(height: 16),
 
-                  
+                  // Sessions Summary
+                  Card(
+                    elevation: 4,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          Text(
+                            'Session Summary',
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                          const SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Column(
+                                children: [
+                                  Text(
+                                    _sessions.length.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const Text('Total Sessions'),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    _sessions
+                                        .where((s) => s.attended)
+                                        .length
+                                        .toString(),
+                                    style: const TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.green,
+                                    ),
+                                  ),
+                                  const Text('Attended'),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    _sessions
+                                        .where((s) => !s.attended)
+                                        .length
+                                        .toString(),
+                                    style: const TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                  const Text('Missed'),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 32),
 
                   // Risk Thresholds Info
                   Card(
