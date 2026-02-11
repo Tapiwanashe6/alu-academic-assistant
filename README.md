@@ -35,11 +35,11 @@ lib/
 ## How to Run the Project
 1. Clone the repository:
 ```bash
-git clone https://github.com/<your-username>/alu-academic-assistant.git
+git clone https://github.com/Tapiwanashe6/alu-academic-assistant.git
 cd alu-academic-assistant
 flutter pub get
 flutter run
-
+```
 Contributors
 
 Ogayo Andrew Ater – Created core data models (announcement, session, assignment)
