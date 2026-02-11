@@ -50,7 +50,3 @@ Tapiwanashe Gift Marufu – Worked on session scheduling and attendance tracking
 Nehemi Ishimwe – Contributed to navigation setup and UI consistency
 
 Olive Umurerwa – Implemented dashboard and risk status UI screens
-
-Course Context
-
-This project was developed as part of the Mobile Application Development course at African Leadership University (ALU).
