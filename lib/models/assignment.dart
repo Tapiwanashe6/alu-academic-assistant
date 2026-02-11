@@ -3,6 +3,7 @@ class Assignment {
   final String id;
   final String title;
   final String description;
+  final String course; // Course name field
   final DateTime dueDate;
   final String priority;
   final String type; // 'summative', 'formative', etc.
@@ -13,6 +14,7 @@ class Assignment {
     required this.id,
     required this.title,
     required this.description,
+    required this.course,
     required this.dueDate,
     required this.priority,
     required this.type,
@@ -26,6 +28,7 @@ class Assignment {
       id: json['id'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
+      course: json['course'] as String? ?? '',
       dueDate: DateTime.parse(json['dueDate'] as String),
       priority: json['priority'] as String,
       type: json['type'] as String? ?? 'formative',
@@ -40,8 +43,10 @@ class Assignment {
       'id': id,
       'title': title,
       'description': description,
+      'course': course,
       'dueDate': dueDate.toIso8601String(),
       'priority': priority,
+      'type': type,
       'isCompleted': isCompleted,
       'hasReminder': hasReminder,
     };
@@ -52,6 +57,7 @@ class Assignment {
     String? id,
     String? title,
     String? description,
+    String? course,
     DateTime? dueDate,
     String? priority,
     String? type,
@@ -62,6 +68,7 @@ class Assignment {
       id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
+      course: course ?? this.course,
       dueDate: dueDate ?? this.dueDate,
       priority: priority ?? this.priority,
       type: type ?? this.type,
@@ -72,7 +79,7 @@ class Assignment {
 
   @override
   String toString() {
-    return 'Assignment(id: $id, title: $title, dueDate: $dueDate, priority: $priority, isCompleted: $isCompleted)';
+    return 'Assignment(id: $id, title: $title, course: $course, dueDate: $dueDate, priority: $priority, isCompleted: $isCompleted)';
   }
 
   @override
@@ -82,6 +89,7 @@ class Assignment {
         other.id == id &&
         other.title == title &&
         other.description == description &&
+        other.course == course &&
         other.dueDate == dueDate &&
         other.priority == priority &&
         other.isCompleted == isCompleted &&
@@ -93,6 +101,7 @@ class Assignment {
     return id.hashCode ^
         title.hashCode ^
         description.hashCode ^
+        course.hashCode ^
         dueDate.hashCode ^
         priority.hashCode ^
         isCompleted.hashCode ^

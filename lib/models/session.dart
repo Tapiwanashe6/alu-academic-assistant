@@ -5,6 +5,7 @@ class Session {
   final DateTime date;
   final String startTime;
   final String endTime;
+  final String location; // Location field
   final String type;
   final bool attended;
 
@@ -14,6 +15,7 @@ class Session {
     required this.date,
     required this.startTime,
     required this.endTime,
+    required this.location,
     required this.type,
     this.attended = false,
   });
@@ -26,6 +28,7 @@ class Session {
       date: DateTime.parse(json['date'] as String),
       startTime: json['startTime'] as String,
       endTime: json['endTime'] as String,
+      location: json['location'] as String? ?? '',
       type: json['type'] as String,
       attended: json['attended'] as bool? ?? false,
     );
@@ -39,6 +42,7 @@ class Session {
       'date': date.toIso8601String(),
       'startTime': startTime,
       'endTime': endTime,
+      'location': location,
       'type': type,
       'attended': attended,
     };
@@ -51,6 +55,7 @@ class Session {
     DateTime? date,
     String? startTime,
     String? endTime,
+    String? location,
     String? type,
     bool? attended,
   }) {
@@ -60,6 +65,7 @@ class Session {
       date: date ?? this.date,
       startTime: startTime ?? this.startTime,
       endTime: endTime ?? this.endTime,
+      location: location ?? this.location,
       type: type ?? this.type,
       attended: attended ?? this.attended,
     );
@@ -67,7 +73,7 @@ class Session {
 
   @override
   String toString() {
-    return 'Session(id: $id, title: $title, date: $date, type: $type, attended: $attended)';
+    return 'Session(id: $id, title: $title, date: $date, location: $location, type: $type, attended: $attended)';
   }
 
   @override
@@ -79,6 +85,7 @@ class Session {
         other.date == date &&
         other.startTime == startTime &&
         other.endTime == endTime &&
+        other.location == location &&
         other.type == type &&
         other.attended == attended;
   }
@@ -90,6 +97,7 @@ class Session {
         date.hashCode ^
         startTime.hashCode ^
         endTime.hashCode ^
+        location.hashCode ^
         type.hashCode ^
         attended.hashCode;
   }

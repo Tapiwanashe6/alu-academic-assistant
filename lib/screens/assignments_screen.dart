@@ -4,6 +4,7 @@ import '../services/storage_service.dart';
 import '../utils/constants.dart';
 import 'dashboard_screen.dart';
 import 'announcements_screen.dart';
+import 'sessions_screen.dart';
 import 'risk_status_screen.dart';
 
 /// Assignments Screen for managing tasks
@@ -69,6 +70,21 @@ class _AssignmentsScreenState extends State<AssignmentsScreen>
     }
   }
 
+  Future<void> _editAssignment(Assignment assignment) async {
+    final result = await showDialog<Assignment>(
+      context: context,
+      builder: (context) => EditAssignmentDialog(assignment: assignment),
+    );
+
+    if (result != null) {
+      final index = _assignments.indexWhere((a) => a.id == assignment.id);
+      if (index != -1) {
+        setState(() => _assignments[index] = result);
+        await _storageService.saveAssignments(_assignments);
+      }
+    }
+  }
+
   Future<void> _deleteAssignment(Assignment assignment) async {
     final confirmed = await showDialog<bool>(
       context: context,
@@ -128,6 +144,8 @@ class _AssignmentsScreenState extends State<AssignmentsScreen>
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(assignment.course),
+                  const SizedBox(height: 4),
                   Text(assignment.description),
                   const SizedBox(height: 4),
                   Text(
@@ -141,12 +159,24 @@ class _AssignmentsScreenState extends State<AssignmentsScreen>
                   ),
                 ],
               ),
-              trailing: Checkbox(
-                value: assignment.isCompleted,
-                onChanged: (value) => _toggleAssignmentCompletion(assignment),
-                activeColor: ALUColors.primary,
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Edit button
+                  IconButton(
+                    icon: const Icon(Icons.edit, color: ALUColors.primary),
+                    onPressed: () => _editAssignment(assignment),
+                    tooltip: 'Edit Assignment',
+                  ),
+                  // Checkbox for completion
+                  Checkbox(
+                    value: assignment.isCompleted,
+                    onChanged: (value) => _toggleAssignmentCompletion(assignment),
+                    activeColor: ALUColors.primary,
+                  ),
+                ],
               ),
-              onTap: () => _toggleAssignmentCompletion(assignment),
+              onTap: () => _editAssignment(assignment),
             ),
           ),
         );
@@ -229,6 +259,13 @@ class _AssignmentsScreenState extends State<AssignmentsScreen>
             case 3:
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
+                  builder: (context) => const SessionsScreen(),
+                ),
+              );
+              break;
+            case 4:
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
                   builder: (context) => const RiskStatusScreen(),
                 ),
               );
@@ -247,6 +284,10 @@ class _AssignmentsScreenState extends State<AssignmentsScreen>
           BottomNavigationBarItem(
             icon: Icon(Icons.announcement),
             label: ALUConstants.announcementsNav,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.schedule),
+            label: 'Sessions',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.warning),
@@ -272,6 +313,7 @@ class _AddAssignmentDialogState extends State<AddAssignmentDialog> {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
+  final _courseController = TextEditingController();
   DateTime _selectedDate = DateTime.now().add(const Duration(days: 1));
   String _selectedPriority = ALUConstants.mediumPriority;
   String _selectedType = 'formative';
@@ -281,6 +323,7 @@ class _AddAssignmentDialogState extends State<AddAssignmentDialog> {
   void dispose() {
     _titleController.dispose();
     _descriptionController.dispose();
+    _courseController.dispose();
     super.dispose();
   }
 
@@ -323,6 +366,17 @@ class _AddAssignmentDialogState extends State<AddAssignmentDialog> {
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
                     return 'Please enter a description';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _courseController,
+                decoration: const InputDecoration(labelText: 'Course Name'),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Please enter a course name';
                   }
                   return null;
                 },
@@ -404,6 +458,7 @@ class _AddAssignmentDialogState extends State<AddAssignmentDialog> {
                 id: DateTime.now().millisecondsSinceEpoch.toString(),
                 title: _titleController.text.trim(),
                 description: _descriptionController.text.trim(),
+                course: _courseController.text.trim(),
                 dueDate: _selectedDate,
                 priority: _selectedPriority,
                 type: _selectedType,
@@ -422,3 +477,197 @@ class _AddAssignmentDialogState extends State<AddAssignmentDialog> {
     );
   }
 }
+
+/// Dialog for editing existing assignments
+class EditAssignmentDialog extends StatefulWidget {
+  final Assignment assignment;
+
+  const EditAssignmentDialog({super.key, required this.assignment});
+
+  @override
+  State<EditAssignmentDialog> createState() => _EditAssignmentDialogState();
+}
+
+class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
+  final _formKey = GlobalKey<FormState>();
+  late final TextEditingController _titleController;
+  late final TextEditingController _descriptionController;
+  late final TextEditingController _courseController;
+  late DateTime _selectedDate;
+  late String _selectedPriority;
+  late String _selectedType;
+  late bool _hasReminder;
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController = TextEditingController(text: widget.assignment.title);
+    _descriptionController =
+        TextEditingController(text: widget.assignment.description);
+    _courseController = TextEditingController(text: widget.assignment.course);
+    _selectedDate = widget.assignment.dueDate;
+    _selectedPriority = widget.assignment.priority;
+    _selectedType = widget.assignment.type;
+    _hasReminder = widget.assignment.hasReminder;
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _descriptionController.dispose();
+    _courseController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+    );
+    if (picked != null) {
+      setState(() => _selectedDate = picked);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Edit Assignment'),
+      content: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                controller: _titleController,
+                decoration: const InputDecoration(labelText: 'Title'),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Please enter a title';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _descriptionController,
+                decoration: const InputDecoration(labelText: 'Description'),
+                maxLines: 3,
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Please enter a description';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _courseController,
+                decoration: const InputDecoration(labelText: 'Course Name'),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Please enter a course name';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Due Date: ${_selectedDate.toString().split(' ')[0]}',
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () => _selectDate(context),
+                    child: const Text('Select Date'),
+                  ),
+                ],
+              ),
+              DropdownButtonFormField<String>(
+                initialValue: _selectedPriority,
+                decoration: const InputDecoration(labelText: 'Priority'),
+                items:
+                    [
+                      ALUConstants.lowPriority,
+                      ALUConstants.mediumPriority,
+                      ALUConstants.highPriority,
+                    ].map((priority) {
+                      return DropdownMenuItem(
+                        value: priority,
+                        child: Text(priority),
+                      );
+                    }).toList(),
+                onChanged: (value) {
+                  if (value != null) {
+                    setState(() => _selectedPriority = value);
+                  }
+                },
+              ),
+              DropdownButtonFormField<String>(
+                initialValue: _selectedType,
+                decoration: const InputDecoration(labelText: 'Type'),
+                items: const [
+                  DropdownMenuItem(
+                    value: 'formative',
+                    child: Text('Formative'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'summative',
+                    child: Text('Summative'),
+                  ),
+                ],
+                onChanged: (value) {
+                  if (value != null) {
+                    setState(() => _selectedType = value);
+                  }
+                },
+              ),
+              CheckboxListTile(
+                title: const Text('Set Reminder'),
+                value: _hasReminder,
+                onChanged: (value) {
+                  setState(() => _hasReminder = value ?? false);
+                },
+                activeColor: ALUColors.primary,
+              ),
+            ],
+          ),
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Cancel'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            if (_formKey.currentState!.validate()) {
+              final assignment = Assignment(
+                id: widget.assignment.id,
+                title: _titleController.text.trim(),
+                description: _descriptionController.text.trim(),
+                course: _courseController.text.trim(),
+                dueDate: _selectedDate,
+                priority: _selectedPriority,
+                type: _selectedType,
+                isCompleted: widget.assignment.isCompleted,
+                hasReminder: _hasReminder,
+              );
+              Navigator.of(context).pop(assignment);
+            }
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: ALUColors.primary,
+            foregroundColor: ALUColors.background,
+          ),
+          child: const Text('Save'),
+        ),
+      ],
+    );
+  }
+}
+

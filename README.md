@@ -1,52 +1,16 @@
-# ALU Academic Assistant
+# alu_academic_assistant
 
-ALU Academic Assistant is a Flutter mobile application built to help African Leadership University students manage their academic responsibilities. The app allows students to track assignments, schedule academic sessions, and monitor attendance to reduce missed deadlines and academic stress.
+A new Flutter project.
 
-## Core Features
-- Dashboard with today’s date, academic week, upcoming sessions, and pending assignments
-- Assignment management (create, edit, complete, delete)
-- Academic session scheduling with attendance tracking
-- Automatic attendance percentage calculation
-- Visual warning when attendance drops below 75%
-- Clean UI following ALU branding
+## Getting Started
 
-## Folder Structure
-```bash
-lib/
-├── main.dart
-├── models/
-│   ├── announcement.dart
-│   ├── assignment.dart
-│   ├── session.dart
-│   └── user.dart
-├── screens/
-│   ├── announcements_screen.dart
-│   ├── assignments_screen.dart
-│   ├── dashboard_screen.dart
-│   ├── risk_status_screen.dart
-│   └── signup_screen.dart
-├── services/
-│   └── storage_service.dart
-└── utils/
-```
+This project is a starting point for a Flutter application.
 
+A few resources to get you started if this is your first Flutter project:
 
-## How to Run the Project
-1. Clone the repository:
-```bash
-git clone https://github.com/Tapiwanashe6/alu-academic-assistant.git
-cd alu-academic-assistant
-flutter pub get
-flutter run
-```
-## Contributors
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-Ogayo Andrew Ater – Created core data models (announcement, session, assignment)
-
-Agertu Diriba Aliko – Implemented assignment logic and interactions
-
-Tapiwanashe Gift Marufu – Worked on session scheduling and attendance tracking
-
-Nehemi Ishimwe – Contributed to navigation setup and UI consistency
-
-Olive Umurerwa – Implemented dashboard and risk status UI screens
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.

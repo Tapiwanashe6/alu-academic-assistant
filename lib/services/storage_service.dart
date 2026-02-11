@@ -155,13 +155,14 @@ class StorageService {
   Future<void> initializeDefaultAssignments() async {
     final existingAssignments = await loadAssignments();
     if (existingAssignments.isEmpty) {
-      final defaultAssignments = [
+    final defaultAssignments = [
         // Formative assignments (quizzes, activities)
         Assignment(
           id: 'formative_1',
           title: 'Flutter Widgets Quiz',
           description:
               'Complete the online quiz on Flutter widgets and state management concepts.',
+          course: 'Mobile Application Development',
           dueDate: DateTime.now().add(const Duration(days: 3)),
           priority: 'High',
           type: 'formative',
@@ -172,6 +173,7 @@ class StorageService {
           title: 'Database Design Activity',
           description:
               'Create an ER diagram for a student management system as a group activity.',
+          course: 'Database Systems',
           dueDate: DateTime.now().add(const Duration(days: 5)),
           priority: 'Medium',
           type: 'formative',
@@ -182,6 +184,7 @@ class StorageService {
           title: 'Code Review Exercise',
           description:
               'Review and provide feedback on a peer\'s Flutter application code.',
+          course: 'Software Engineering',
           dueDate: DateTime.now().add(const Duration(days: 7)),
           priority: 'Medium',
           type: 'formative',
@@ -193,6 +196,7 @@ class StorageService {
           title: 'Final Flutter Project',
           description:
               'Develop a complete mobile application using Flutter with full functionality.',
+          course: 'Mobile Application Development',
           dueDate: DateTime.now().add(const Duration(days: 21)),
           priority: 'High',
           type: 'summative',
@@ -203,6 +207,7 @@ class StorageService {
           title: 'Database Systems Exam',
           description:
               'Prepare for the comprehensive database systems examination covering SQL, normalization, and database design.',
+          course: 'Database Systems',
           dueDate: DateTime.now().add(const Duration(days: 14)),
           priority: 'High',
           type: 'summative',
@@ -213,6 +218,7 @@ class StorageService {
           title: 'Software Engineering Project',
           description:
               'Complete the semester-long software engineering project with documentation and presentation.',
+          course: 'Software Engineering',
           dueDate: DateTime.now().add(const Duration(days: 28)),
           priority: 'High',
           type: 'summative',
@@ -236,7 +242,8 @@ class StorageService {
           date: now.subtract(const Duration(days: 1)),
           startTime: '09:00',
           endTime: '10:30',
-          type: 'Lecture',
+          location: 'Room 101, Engineering Building',
+          type: 'Class',
           attended: true,
         ),
         Session(
@@ -245,7 +252,8 @@ class StorageService {
           date: now.subtract(const Duration(days: 2)),
           startTime: '11:00',
           endTime: '12:30',
-          type: 'Tutorial',
+          location: 'Room 205, Science Block',
+          type: 'Mastery Session',
           attended: true,
         ),
         Session(
@@ -254,7 +262,8 @@ class StorageService {
           date: now.subtract(const Duration(days: 3)),
           startTime: '14:00',
           endTime: '16:00',
-          type: 'Lab',
+          location: 'Computer Lab 3',
+          type: 'Study Group',
           attended: false, // Missed session
         ),
         Session(
@@ -263,7 +272,8 @@ class StorageService {
           date: now.subtract(const Duration(days: 4)),
           startTime: '10:00',
           endTime: '11:30',
-          type: 'Workshop',
+          location: 'Conference Room A',
+          type: 'PSL Meeting',
           attended: true,
         ),
         Session(
@@ -272,7 +282,8 @@ class StorageService {
           date: now.subtract(const Duration(days: 5)),
           startTime: '13:00',
           endTime: '14:30',
-          type: 'Seminar',
+          location: 'Auditorium B',
+          type: 'Class',
           attended: true,
         ),
         Session(
@@ -281,7 +292,8 @@ class StorageService {
           date: now.subtract(const Duration(days: 6)),
           startTime: '09:00',
           endTime: '10:30',
-          type: 'Lecture',
+          location: 'Room 301, Main Hall',
+          type: 'Class',
           attended: false, // Missed session
         ),
         Session(
@@ -290,7 +302,8 @@ class StorageService {
           date: now.subtract(const Duration(days: 7)),
           startTime: '15:00',
           endTime: '16:30',
-          type: 'Tutorial',
+          location: 'Study Room 4',
+          type: 'Mastery Session',
           attended: true,
         ),
         // Upcoming sessions
@@ -300,7 +313,8 @@ class StorageService {
           date: now.add(const Duration(days: 2)),
           startTime: '10:00',
           endTime: '12:00',
-          type: 'Presentation',
+          location: 'Presentation Hall',
+          type: 'PSL Meeting',
           attended: false, // Not yet attended
         ),
         Session(
@@ -309,7 +323,8 @@ class StorageService {
           date: now.add(const Duration(days: 5)),
           startTime: '14:00',
           endTime: '16:00',
-          type: 'Study Session',
+          location: 'Library Conference Room',
+          type: 'Study Group',
           attended: false, // Not yet attended
         ),
       ];

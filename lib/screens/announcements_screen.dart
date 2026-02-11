@@ -4,6 +4,7 @@ import '../services/storage_service.dart';
 import '../utils/constants.dart';
 import 'dashboard_screen.dart';
 import 'assignments_screen.dart';
+import 'sessions_screen.dart';
 import 'risk_status_screen.dart';
 
 /// Announcements Screen for viewing university announcements
@@ -128,6 +129,13 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
             case 3:
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
+                  builder: (context) => const SessionsScreen(),
+                ),
+              );
+              break;
+            case 4:
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
                   builder: (context) => const RiskStatusScreen(),
                 ),
               );
@@ -146,6 +154,10 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.announcement),
             label: ALUConstants.announcementsNav,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.schedule),
+            label: 'Sessions',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.warning),
