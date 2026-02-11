@@ -39,7 +39,7 @@ cd alu-academic-assistant
 flutter pub get
 flutter run
 ```
-Contributors
+## Contributors
 
 Ogayo Andrew Ater – Created core data models (announcement, session, assignment)
 
