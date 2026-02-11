@@ -1,16 +1,44 @@
-# alu_academic_assistant
+# ALU Academic Assistant
 
-A new Flutter project.
+A Flutter mobile application that helps **ALU students** manage assignments, academic sessions, and attendance in one place.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## Features
+- Dashboard with upcoming sessions, pending assignments, and attendance status
+- Assignment tracking (due dates, priorities, completion status)
+- Session scheduling and attendance tracking
+- Attendance risk indicator (below 75%)
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Project Structure
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+lib/
+├── models/
+├── screens/
+├── services/
+├── utils/
+└── main.dart
+
+
+---
+
+## How to Run
+
+git clone https://github.com/<your-username>/alu-academic-assistant.git
+cd alu-academic-assistant
+flutter pub get
+flutter run
+
+Contributors
+
+Ogayo Andrew Ater – Core data models (announcement, session, assignment)
+
+Agertu Diriba Aliko – Assignment logic and interactions
+
+Tapiwanashe Gift Marufu – Session scheduling and attendance tracking
+
+Nehemi Ishimwe – Navigation setup and UI consistency
+
+Olive Umurerwa – Dashboard and risk status UI screens
