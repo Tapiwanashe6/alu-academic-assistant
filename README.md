@@ -11,26 +11,25 @@ ALU Academic Assistant is a Flutter mobile application built to help African Lea
 - Clean UI following ALU branding
 
 ## Folder Structure
+```bash
 lib/
+├── main.dart
 ├── models/
-│ ├── announcement.dart
-│ ├── assignment.dart
-│ ├── session.dart
-│ └── user.dart
-│
+│   ├── announcement.dart
+│   ├── assignment.dart
+│   ├── session.dart
+│   └── user.dart
 ├── screens/
-│ ├── announcements_screen.dart
-│ ├── assignments_screen.dart
-│ ├── dashboard_screen.dart
-│ ├── risk_status_screen.dart
-│ └── signup_screen.dart
-│
+│   ├── announcements_screen.dart
+│   ├── assignments_screen.dart
+│   ├── dashboard_screen.dart
+│   ├── risk_status_screen.dart
+│   └── signup_screen.dart
 ├── services/
-│ └── storage_service.dart
-│
-├── utils/
-│
-└── main.dart
+│   └── storage_service.dart
+└── utils/
+```
+
 
 ## How to Run the Project
 1. Clone the repository:
