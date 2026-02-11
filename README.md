@@ -56,7 +56,7 @@ Persistent storage is handled through `StorageService`lib/services/storage_servi
 
 ### Install & Run
 ```sh
-git clone <your_hereepo_url>
+git clone <https://github.com/Tapiwanashe6/alu-academic-assistant>
 cd alu-academic-assistant
 flutter pub get
 flutter run
